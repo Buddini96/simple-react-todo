@@ -92,12 +92,15 @@ function App() {
     if (tasks.length === 0) return;
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
-
+  
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks'));
-    // Check if storedTasks is not null before setting it
-    setTasks(storedTasks || []);
+    // Check if storedTasks is not null or undefined before setting it
+    if (storedTasks !== null && storedTasks !== undefined) {
+      setTasks(storedTasks);
+    }
   }, []);
+  
 
   function addTask(name) {
     setTasks((prev) => [...prev, { name: name, done: false }]);
